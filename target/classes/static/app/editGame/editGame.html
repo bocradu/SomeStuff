@@ -1,16 +1,43 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<div data-ng-init="viewModel.init()">
+    <div class="page-header" style="margin-top:0" align="center">
+        <h1 style="margin-top:10px">Edit score {{viewModel.game.game}} : {{viewModel.game.playerOne.nickname}} vs {{viewModel.game.playerTwo.nickname}}</h1>
+    </div>
+    <div>
+        <form ng-submit="viewModel.save()">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2" style="margin-bottom: 25px">
+                    <div class="input-group">
+                        <span class="input-group-addon">Game Name</span>
+                        <input type="text" class="form-control" required=required data-translr-await-id="1" placeholder="Game Name"
+                               ng-model="viewModel.game.game" />
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <span class="input-group-addon">Player 1 name</span>
+                        <input type="text" class="form-control" required=required data-translr-await-id="1" placeholder="Player 1 name"
+                               ng-model="viewModel.game.playerOne.nickname" />
+                        <span class="input-group-addon">Score</span>
+                        <input type="text" class="form-control" required=required data-translr-await-id="1" placeholder="Score"
+                               ng-model="viewModel.game.scorePlayerOne.score" />
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <span class="input-group-addon">Player 2 name</span>
+                        <input type="text" class="form-control" required=required data-translr-await-id="1" placeholder="Player 2 name"
+                               ng-model="viewModel.game.playerTwo.nickname" />
+                        <span class="input-group-addon">Score</span>
+                        <input type="text" class="form-control" required=required data-translr-await-id="1" placeholder="Score"
+                               ng-model="viewModel.game.scorePlayerTwo.score" />
+                    </div>
+                    <br />
+                    <br />
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn btn-default" style="margin-bottom: 25px">
+                            <span class="fa fa-fw fa-plus"></span> Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

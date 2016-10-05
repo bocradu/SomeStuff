@@ -1,6 +1,8 @@
 package org.example.ws.web.api;
 
+import javax.xml.ws.http.HTTPException;
 import org.example.ws.db.repository.GamesRepository;
+import org.example.ws.db.repository.ScoresRepository;
 import org.example.ws.model.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,40 +16,45 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class GameController {
-	
-	@Autowired
-	private GamesRepository dbProxy;
-	
-	@RequestMapping(value = "/games/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Game> getGames(@PathVariable("id") Integer id) {
 
-		Game game = dbProxy.findOne(id);
-		if (game == null) {
-			return new ResponseEntity<Game>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<Game>(game, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/games/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Game> updateGame(@RequestBody Game game){
-		
-		Game updateGame = dbProxy.saveAndFlush(game);
-		if(updateGame == null){
-			return new ResponseEntity<Game>(
-				HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-			return new ResponseEntity<Game>(updateGame, HttpStatus.OK);
-		}
-	
-	@RequestMapping(
-			value = "/games/{id}",
-			method = RequestMethod.DELETE,
-			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Game> deleteGame(
-		@PathVariable("id") Integer id, @RequestBody Game game){
-			
-			dbProxy.delete(id);
-			return new ResponseEntity<Game>(HttpStatus.NO_CONTENT);
-					
-		}
+    @Autowired
+    private GamesRepository dbProxy;
+
+    @Autowired
+    private ScoresRepository dbScoresProxy;
+
+    @RequestMapping(value = "/games/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Game getGames(@PathVariable("id") Integer id) {
+
+        Game game = dbProxy.findOne(id);
+        if (game == null) {
+            throw new HTTPException(500);
+        }
+        return game;
+    }
+
+    @RequestMapping(value = "/games/{id}",
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Game updateGame(@RequestBody Game game) {
+
+        Game updateGame = dbProxy.saveAndFlush(game);
+        if (updateGame == null) {
+            throw new HTTPException(500);
+        }
+        return game;
+    }
+
+    @RequestMapping(
+            value = "/games/{id}",
+            method = RequestMethod.DELETE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Game> deleteGame(
+            @PathVariable("id") Integer id, @RequestBody Game game) {
+        dbProxy.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

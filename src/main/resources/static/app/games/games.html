@@ -7,7 +7,17 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Game</th>
+                    <th> 
+                        <a href ng-click="viewModel.sortBy('game')">Game</a>
+                        <span class="sortorder" ng-show="propertyName === 'game'" ng-class="{reverse: reverse}"></span></th>
+                    <th> 
+                        <a href ng-click="viewModel.sortBy('playerOne.nickname')">Player 1</a>
+                        <span class="sortorder" ng-show="propertyName === 'playerOne.nickname'" ng-class="{reverse: reverse}"></span></th>
+                    <th>Score</th>
+                    <th> 
+                        <a href ng-click="viewModel.sortBy('playerTwo.nickname')">Player 2</a>
+                        <span class="sortorder" ng-show="propertyName === 'playerTwo.nickname'" ng-class="{reverse: reverse}"></span></th>
+                    <th>Score</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -15,9 +25,13 @@
                 <tr data-ng-repeat="game in viewModel.games">
                     <td>{{game.id}}</td>
                     <td>{{game.game}}</td>
+                    <td>{{game.playerOne.nickname}}</td>
+                    <td>{{game.scorePlayerOne.score}}</td>
+                    <td>{{game.playerTwo.nickname}}</td>
+                    <td>{{game.scorePlayerTwo.score}}</td>
                     <td>
-                        <a href="#/editJob/{{game.id}}" class="btn btn-sm btn-primary">Edit</a>
-                        <a ng-click="viewModel.deleteJob(job)" class="btn btn-sm btn-danger">Delete</a>
+                        <a href="#/editGame/{{game.id}}" class="btn btn-sm btn-primary">Edit</a>
+                        <a ng-click="viewModel.deleteGame(game)" class="btn btn-sm btn-danger">Delete</a>
                     </td>
                 </tr>
         </table>

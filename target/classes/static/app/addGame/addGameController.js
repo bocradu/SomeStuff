@@ -11,7 +11,6 @@
     function addGameController($http,$location) {
         var viewModel = this;
         viewModel.save = save;        
-        viewModel.games = {};
 
         function save() {
             viewModel.game.scorePlayerOne.game=viewModel.game.game;
